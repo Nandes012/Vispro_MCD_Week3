@@ -14,31 +14,59 @@
 
 import 'package:flutter/material.dart';
 import 'supplemental/cut_corners_border.dart';
+import 'model/product.dart';
 
+import 'category_menu_page.dart';
+import 'backdrop.dart';
 import 'colors.dart';
 import 'home.dart';
 import 'login.dart';
 
 // TODO: Convert ShrineApp to stateful widget (104)
-class ShrineApp extends StatelessWidget {
+class ShrineApp extends StatefulWidget {
   const ShrineApp({Key? key}) : super(key: key);
+
+  @override
+  State<ShrineApp> createState() => _ShrineAppState();
+}
+
+// This is where you add _currentCategory and _onCategoryTap
+class _ShrineAppState extends State<ShrineApp> {
+  Category _currentCategory = Category.all;
+
+  void _onCategoryTap(Category category) {
+    setState(() {
+      _currentCategory = category;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Shrine',
+      title: 'Slime',
       initialRoute: '/login',
       routes: {
         '/login': (BuildContext context) => const LoginPage(),
         // TODO: Change to a Backdrop with a HomePage frontLayer (104)
-        '/': (BuildContext context) => const HomePage(),
+        '/': (BuildContext context) => Backdrop(
+               currentCategory: _currentCategory,
+              // TODO: Pass _currentCategory for frontLayer (104)
+              frontLayer: HomePage(category: _currentCategory),
+              // TODO: Change backLayer field value to CategoryMenuPage (104)
+              backLayer: CategoryMenuPage(
+                currentCategory: _currentCategory,
+                onCategoryTap: _onCategoryTap,
+              ),
+              frontTitle: const Text('SLIME'),
+              backTitle: const Text('MENU'),
+            ),
         // TODO: Make currentCategory field take _currentCategory (104)
         // TODO: Pass _currentCategory for frontLayer (104)
         // TODO: Change backLayer field value to CategoryMenuPage (104)
       },
       // TODO: Customize the theme (103)
         theme: _kShrineTheme,
-    );
+    );  
   }
 }
 
@@ -59,6 +87,10 @@ ThemeData _buildShrineTheme() {
   textSelectionTheme: const TextSelectionThemeData(
   selectionColor: kShrinePink100,
 ),
+      appBarTheme: const AppBarTheme(
+      foregroundColor: kShrineBrown900,
+      backgroundColor: kShrinePink100,
+    ),
     // TODO: Decorate the inputs (103)
         inputDecorationTheme: const InputDecorationTheme(
       border: CutCornersBorder(),
