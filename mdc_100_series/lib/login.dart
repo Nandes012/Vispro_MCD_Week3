@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -38,31 +39,36 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 Image.asset('assets/slime.png'),
                 const SizedBox(height: 16.0),
-                const Text('Slime Merch'),
+                Text(
+                  'Slime Merch',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                  ),
               ],
             ),
             const SizedBox(height: 20.0),
             // TODO: Remove filled: true values (103)
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(
+                // Removed filled: true
+                labelText: 'Username',
+              ),
+            ),
+            const SizedBox(height: 12.0),
+            TextField(
+              controller: _passwordController,
+              decoration: const InputDecoration(
+                // Removed filled: true
+                labelText: 'Password',
+              ),
+              obscureText: true,
+            ),
             // TODO: Add TextField widgets (101)
             
-              TextField(
-                  controller: _usernameController,
-                decoration: const InputDecoration(
-                  filled: true,
-                  labelText: 'Username',
-                ),
-              ),
+
               // spacer
               const SizedBox(height: 10.0),
-              // [Password]
-              TextField(
-                 controller: _passwordController,
-                decoration: const InputDecoration(
-                  filled: true,
-                  labelText: 'Password',
-                ),
-                obscureText: true,
-              ),
+
             // TODO: Add button bar (101)
             OverflowBar(
               alignment: MainAxisAlignment.end,
@@ -78,6 +84,12 @@ class _LoginPageState extends State<LoginPage> {
             _passwordController.clear();
 
       },
+        style: TextButton.styleFrom(
+    foregroundColor: Theme.of(context).colorScheme.secondary,
+    shape: const BeveledRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(7.0))
+    ),
+  ),
     ),
     // TODO: Add an elevation to NEXT (103)
     // TODO: Add a beveled rectangular border to NEXT (103)
@@ -87,7 +99,16 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: Show the next page (101) 
          Navigator.pop(context);
       },
+        style: ElevatedButton.styleFrom(
+    foregroundColor: kShrineBrown900,
+    backgroundColor: kShrinePink100,
+    elevation: 8.0,
+    shape: const BeveledRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(7.0)),
     ),
+  ),
+),
+    
               ],
             ),
           ],
