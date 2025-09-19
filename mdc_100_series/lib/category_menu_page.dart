@@ -34,7 +34,7 @@ class CategoryMenuPage extends StatelessWidget {
               Container(
                 width: 70.0,
                 height: 2.0,
-                color: kShrinePink400,
+                color: kShrineCyan200,
               ),
             ],
           )
@@ -56,7 +56,7 @@ class CategoryMenuPage extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.only(top: 40.0),
-        color: kShrinePink100,
+        color: kShrineCyan200,
         child: ListView(
           children: _categories
             .map((Category c) => _buildCategory(c, context))

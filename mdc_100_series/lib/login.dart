@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
       },
         style: ElevatedButton.styleFrom(
     foregroundColor: kShrineBrown900,
-    backgroundColor: kShrinePink100,
+    backgroundColor: kShrineCyan200,
     elevation: 8.0,
     shape: const BeveledRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(7.0)),

@@ -77,7 +77,7 @@ ThemeData _buildShrineTheme() {
   final ThemeData base = ThemeData.light(useMaterial3: true);
   return base.copyWith(
     colorScheme: base.colorScheme.copyWith(
-      primary: kShrinePink100,
+      primary: kShrineCyan200,
       onPrimary: kShrineBrown900,
       secondary: kShrineBrown900,
       error: kShrineErrorRed,
@@ -85,11 +85,11 @@ ThemeData _buildShrineTheme() {
     // TODO: Add the text themes (103)
     textTheme: _buildShrineTextTheme(base.textTheme),
   textSelectionTheme: const TextSelectionThemeData(
-  selectionColor: kShrinePink100,
+  selectionColor: kShrineCyan200,
 ),
       appBarTheme: const AppBarTheme(
       foregroundColor: kShrineBrown900,
-      backgroundColor: kShrinePink100,
+      backgroundColor: kShrineCyan200,
     ),
     // TODO: Decorate the inputs (103)
         inputDecorationTheme: const InputDecorationTheme(
