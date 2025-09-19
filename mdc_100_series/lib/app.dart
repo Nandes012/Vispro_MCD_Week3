@@ -82,6 +82,7 @@ ThemeData _buildShrineTheme() {
       secondary: kShrineBrown900,
       error: kShrineErrorRed,
     ),
+      scaffoldBackgroundColor: kShrineCyan50,
     // TODO: Add the text themes (103)
     textTheme: _buildShrineTextTheme(base.textTheme),
   textSelectionTheme: const TextSelectionThemeData(
