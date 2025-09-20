@@ -232,7 +232,7 @@ class ProductsRepository {
         id: 30,
         isFeatured: true,
         name: 'True Demon Lord Rimuru Figure 03',
-        price: 68,
+        price: 3000000,
       ),
       Product(
         category: Category.home,

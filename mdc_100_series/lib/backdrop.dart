@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'model/product.dart';
-
 import 'login.dart';
+import 'colors.dart';
 
 // TODO: Add velocity constant (104)
 const double _kFlingVelocity = 2.0;
@@ -25,21 +25,20 @@ class Backdrop extends StatefulWidget {
 
   @override
   _BackdropState createState() => _BackdropState();
-  
 }
 
 // TODO: Add _FrontLayer class (104)
 class _FrontLayer extends StatelessWidget {
-    // TODO: Add on-tap callback (104)
   const _FrontLayer({
     Key? key,
     this.onTap,
     required this.child,
   }) : super(key: key);
+
   final VoidCallback? onTap;
   final Widget child;
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 16.0,
@@ -49,8 +48,7 @@ class _FrontLayer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          // TODO: Add a GestureDetector (104)
-                   GestureDetector(
+          GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: onTap,
             child: Container(
@@ -79,8 +77,8 @@ class _BackdropTitle extends AnimatedWidget {
     required this.onPress,
     required this.frontTitle,
     required this.backTitle,
-  }) : _listenable = listenable, 
-       super(key: key, listenable: listenable);
+  })  : _listenable = listenable,
+        super(key: key, listenable: listenable);
 
   final Animation<double> _listenable;
 
@@ -93,7 +91,6 @@ class _BackdropTitle extends AnimatedWidget {
       softWrap: false,
       overflow: TextOverflow.ellipsis,
       child: Row(children: <Widget>[
-        // branded icon
         SizedBox(
           width: 72.0,
           child: IconButton(
@@ -109,12 +106,11 @@ class _BackdropTitle extends AnimatedWidget {
                   begin: Offset.zero,
                   end: const Offset(1.0, 0.0),
                 ).evaluate(animation),
-                child: const ImageIcon(AssetImage('assets/diamond.png')),
-              )]),
+                child: const ImageIcon(AssetImage('assets/slime.png')),
+              )
+            ]),
           ),
         ),
-        // Here, we do a custom cross fade between backTitle and frontTitle.
-        // This makes a smooth animation between the two texts.
         Stack(
           children: <Widget>[
             Opacity(
@@ -149,16 +145,15 @@ class _BackdropTitle extends AnimatedWidget {
     );
   }
 }
-// TODO: Add _BackdropState class (104)
+
 // TODO: Add _BackdropState class (104)
 class _BackdropState extends State<Backdrop>
     with SingleTickerProviderStateMixin {
   final GlobalKey _backdropKey = GlobalKey(debugLabel: 'Backdrop');
 
-  // TODO: Add AnimationController widget (104)
-    late AnimationController _controller;
+  late AnimationController _controller;
 
-      @override
+  @override
   void initState() {
     super.initState();
     _controller = AnimationController(
@@ -167,13 +162,13 @@ class _BackdropState extends State<Backdrop>
       vsync: this,
     );
   }
-    @override
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
 
-    // TODO: Add override for didUpdateWidget() (104)
   @override
   void didUpdateWidget(Backdrop old) {
     super.didUpdateWidget(old);
@@ -185,7 +180,6 @@ class _BackdropState extends State<Backdrop>
     }
   }
 
-   // TODO: Add functions to get and change front layer visibility (104)
   bool get _frontLayerVisible {
     final AnimationStatus status = _controller.status;
     return status == AnimationStatus.completed ||
@@ -197,47 +191,43 @@ class _BackdropState extends State<Backdrop>
         velocity: _frontLayerVisible ? -_kFlingVelocity : _kFlingVelocity);
   }
 
-  // TODO: Add BuildContext and BoxConstraints parameters to _buildStack (104)
   Widget _buildStack(BuildContext context, BoxConstraints constraints) {
-        const double layerTitleHeight = 48.0;
-        final Size layerSize = constraints.biggest;
-        final double layerTop = layerSize.height - layerTitleHeight;
+    const double layerTitleHeight = 48.0;
+    final Size layerSize = constraints.biggest;
+    final double layerTop = layerSize.height - layerTitleHeight;
 
-          // TODO: Create a RelativeRectTween Animation (104)
     Animation<RelativeRect> layerAnimation = RelativeRectTween(
       begin: RelativeRect.fromLTRB(
           0.0, layerTop, 0.0, layerTop - layerSize.height),
       end: const RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0),
     ).animate(_controller.view);
 
-    return Stack(
-    key: _backdropKey,
-      children: <Widget>[
-        // TODO: Wrap backLayer in an ExcludeSemantics widget (104)
-                ExcludeSemantics(
-          child: widget.backLayer,
-          excluding: _frontLayerVisible,
-        ),
-     // ✅ PositionedTransition
-      PositionedTransition(
-        rect: layerAnimation,
-        child: _FrontLayer(
-          // later: add onTap callback to toggle visibility
-          onTap: _toggleBackdropLayerVisibility,
-          child: widget.frontLayer,
-        ),
+    return Container(
+      color: kShrineCyan200, // ✅ background matches AppBar
+      child: Stack(
+        key: _backdropKey,
+        children: <Widget>[
+          ExcludeSemantics(
+            child: widget.backLayer,
+            excluding: _frontLayerVisible,
+          ),
+          PositionedTransition(
+            rect: layerAnimation,
+            child: _FrontLayer(
+              onTap: _toggleBackdropLayerVisibility,
+              child: widget.frontLayer,
+            ),
+          ),
+        ],
       ),
-    ],
-  );
-}
-
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     var appBar = AppBar(
       elevation: 0.0,
       titleSpacing: 0.0,
-      // TODO: Replace leading menu icon with IconButton (104)
       title: _BackdropTitle(
         listenable: _controller.view,
         onPress: _toggleBackdropLayerVisibility,
@@ -245,18 +235,16 @@ class _BackdropState extends State<Backdrop>
         backTitle: widget.backTitle,
       ),
       actions: <Widget>[
-        // TODO: Add shortcut to login screen from trailing icons (104)
         IconButton(
           icon: const Icon(
             Icons.search,
             semanticLabel: 'login',
           ),
           onPressed: () {
-          // TODO: Add open login (104)
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder:(BuildContext context) => LoginPage()),
-          );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+            );
           },
         ),
         IconButton(
@@ -265,19 +253,18 @@ class _BackdropState extends State<Backdrop>
             semanticLabel: 'login',
           ),
           onPressed: () {
-          // TODO: Add open login (104)
-              Navigator.push(
+            Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) => LoginPage()),
+                  builder: (BuildContext context) => LoginPage()),
             );
           },
         ),
       ],
     );
+
     return Scaffold(
       appBar: appBar,
-      // TODO: Return a LayoutBuilder widget (104)
       body: LayoutBuilder(builder: _buildStack),
     );
   }

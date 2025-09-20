@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../model/product.dart';
 import 'product_columns.dart';
@@ -26,6 +27,9 @@ class AsymmetricView extends StatelessWidget {
     if (products.isEmpty) {
       return <Container>[];
     }
+
+    final theme = Theme.of(context);
+    final formatter = NumberFormat.currency(locale: 'id', symbol: 'Rp ');
 
     /// This will return a list of columns. It will oscillate between the two
     /// kinds of columns. Even cases of the index (0, 2, 4, etc) will be
@@ -45,12 +49,16 @@ class AsymmetricView extends StatelessWidget {
             bottom: products[bottom],
             top: products.length - 1 >= bottom + 1
                 ? products[bottom + 1]
-                : null);
+                : null,
+            theme: theme,
+            formatter: formatter);
         width += 32.0;
       } else {
         /// Odd cases
         column = OneProductCardColumn(
           product: products[_oddCasesIndex(index)],
+          theme: theme,
+          formatter: formatter,
         );
       }
       return SizedBox(
